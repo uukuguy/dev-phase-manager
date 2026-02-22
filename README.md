@@ -4,7 +4,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-Plugin-blue.svg)](https://github.com/anthropics/claude-code)
-[![Version](https://img.shields.io/badge/version-1.0.0-green.svg)](https://github.com/uukuguy/phase-manager/releases)
+[![Version](https://img.shields.io/badge/version-1.0.0-green.svg)](https://github.com/uukuguy/dev-phase-manager/releases)
 
 Phase Manager is a non-invasive workflow enhancement plugin for Claude Code that enables context-aware, multi-phase development workflows with intelligent checkpoint management.
 
@@ -36,14 +36,14 @@ Phase Manager is a non-invasive workflow enhancement plugin for Claude Code that
 
 ```bash
 # Install from GitHub
-claude-code plugin install https://github.com/uukuguy/phase-manager
+claude-code plugin install https://github.com/uukuguy/dev-phase-manager
 ```
 
 ### Method 2: Manual Installation
 
 ```bash
 # Clone the repository
-git clone https://github.com/uukuguy/phase-manager.git
+git clone https://github.com/uukuguy/dev-phase-manager.git
 
 # Copy to Claude Code plugins directory
 cp -r phase-manager ~/.claude/plugins/
@@ -53,7 +53,7 @@ cp -r phase-manager ~/.claude/plugins/
 
 ```bash
 # Clone for development
-git clone https://github.com/uukuguy/phase-manager.git
+git clone https://github.com/uukuguy/dev-phase-manager.git
 cd phase-manager
 
 # Link to plugins directory
@@ -529,7 +529,7 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ```bash
 # Clone repository
-git clone https://github.com/uukuguy/phase-manager.git
+git clone https://github.com/uukuguy/dev-phase-manager.git
 cd phase-manager
 
 # Link to Claude Code plugins directory
@@ -559,9 +559,9 @@ MIT License - see [LICENSE](LICENSE) file for details.
 
 ## 📞 Support
 
-- **Issues**: [GitHub Issues](https://github.com/uukuguy/phase-manager/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/uukuguy/phase-manager/discussions)
-- **Documentation**: [Wiki](https://github.com/uukuguy/phase-manager/wiki)
+- **Issues**: [GitHub Issues](https://github.com/uukuguy/dev-phase-manager/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/uukuguy/dev-phase-manager/discussions)
+- **Documentation**: [Wiki](https://github.com/uukuguy/dev-phase-manager/wiki)
 
 ## 🗺️ Roadmap
 

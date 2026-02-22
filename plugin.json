@@ -1,12 +1,12 @@
 {
-  "name": "phase-manager",
+  "name": "dev-phase-manager",
   "version": "1.0.0",
   "description": "Professional phase and checkpoint management system for Claude Code - enabling context-aware, multi-phase development workflows",
   "author": "uukuguy",
   "license": "MIT",
-  "repository": "https://github.com/uukuguy/phase-manager",
-  "homepage": "https://github.com/uukuguy/phase-manager#readme",
-  "bugs": "https://github.com/uukuguy/phase-manager/issues",
+  "repository": "https://github.com/uukuguy/dev-phase-manager",
+  "homepage": "https://github.com/uukuguy/dev-phase-manager#readme",
+  "bugs": "https://github.com/uukuguy/dev-phase-manager/issues",
   "commands": {
     "checkpoint-plan": "commands/checkpoint-plan.md",
     "resume-plan": "commands/resume-plan.md",

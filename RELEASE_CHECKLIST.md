@@ -35,7 +35,7 @@
 - [x] Git repository initialized
 - [x] Initial commit created
 - [x] .gitignore configured
-- [x] GitHub repository created (https://github.com/uukuguy/phase-manager)
+- [x] GitHub repository created (https://github.com/uukuguy/dev-phase-manager)
 - [ ] Code pushed to GitHub (requires SSH key authentication)
 - [ ] Repository description set
 - [ ] Topics/tags added
@@ -110,7 +110,7 @@ gh repo create uukuguy/phase-manager --public --description "Professional phase 
 
 ```bash
 # Add remote
-git remote add origin https://github.com/uukuguy/phase-manager.git
+git remote add origin https://github.com/uukuguy/dev-phase-manager.git
 
 # Push code
 git push -u origin main
@@ -130,14 +130,14 @@ gh release create v1.0.0 \
   --title "Phase Manager v1.0.0" \
   --notes-file CHANGELOG.md
 
-# Or create manually at: https://github.com/uukuguy/phase-manager/releases/new
+# Or create manually at: https://github.com/uukuguy/dev-phase-manager/releases/new
 ```
 
 ### 4. Verify Installation
 
 ```bash
 # Test installation
-claude-code plugin install https://github.com/uukuguy/phase-manager
+claude-code plugin install https://github.com/uukuguy/dev-phase-manager
 
 # Verify commands
 /list-plan
@@ -169,14 +169,14 @@ Phase Manager enables context-aware, multi-phase development workflows with inte
 ## 📦 Installation
 
 ```bash
-claude-code plugin install https://github.com/uukuguy/phase-manager
+claude-code plugin install https://github.com/uukuguy/dev-phase-manager
 ```
 
 ## 📚 Documentation
 
-- [README](https://github.com/uukuguy/phase-manager#readme)
-- [Quick Start Guide](https://github.com/uukuguy/phase-manager/blob/main/docs/QUICK_START.md)
-- [Architecture](https://github.com/uukuguy/phase-manager/blob/main/docs/ARCHITECTURE.md)
+- [README](https://github.com/uukuguy/dev-phase-manager#readme)
+- [Quick Start Guide](https://github.com/uukuguy/dev-phase-manager/blob/main/docs/QUICK_START.md)
+- [Architecture](https://github.com/uukuguy/dev-phase-manager/blob/main/docs/ARCHITECTURE.md)
 
 ## 🙏 Acknowledgments
 
@@ -184,8 +184,8 @@ Thanks to the Claude Code team and the superpowers plugin for inspiration!
 
 ## 📞 Support
 
-- [Issues](https://github.com/uukuguy/phase-manager/issues)
-- [Discussions](https://github.com/uukuguy/phase-manager/discussions)
+- [Issues](https://github.com/uukuguy/dev-phase-manager/issues)
+- [Discussions](https://github.com/uukuguy/dev-phase-manager/discussions)
 ```
 
 ---

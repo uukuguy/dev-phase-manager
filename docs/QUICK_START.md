@@ -6,7 +6,7 @@ Get started with Phase Manager in 5 minutes.
 
 ```bash
 # Install from GitHub
-claude-code plugin install https://github.com/uukuguy/phase-manager
+claude-code plugin install https://github.com/uukuguy/dev-phase-manager
 ```
 
 ## Basic Usage
@@ -105,5 +105,5 @@ claude-code plugin install https://github.com/uukuguy/phase-manager
 
 ## Need Help?
 
-- [GitHub Issues](https://github.com/uukuguy/phase-manager/issues)
-- [Discussions](https://github.com/uukuguy/phase-manager/discussions)
+- [GitHub Issues](https://github.com/uukuguy/dev-phase-manager/issues)
+- [Discussions](https://github.com/uukuguy/dev-phase-manager/discussions)
