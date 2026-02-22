@@ -25,7 +25,7 @@ checkpoint_file="docs/plans/.checkpoint.json"
 if [ ! -f "$checkpoint_file" ]; then
   echo "⚠️ Checkpoint file not found"
   echo ""
-  echo "Please execute /checkpoint-plan first to create initial checkpoint"
+  echo "Please execute /dev-phase-manager:checkpoint-plan first to create initial checkpoint"
   exit 1
 fi
 ```
@@ -109,7 +109,7 @@ Updated: 2026-02-22 18:15
 Suggested next steps:
 1. Continue current task
 2. /clear - Clean context (if needed)
-3. /resume-plan - Resume execution (after clear)
+3. /dev-phase-manager:resume-plan - Resume execution (after clear)
 ```
 
 ## Usage Examples
@@ -117,18 +117,18 @@ Suggested next steps:
 ### Scenario 1: Periodic saves during execution
 
 ```bash
-/resume-plan
+/dev-phase-manager:resume-plan
 /subagent-driven-development
 # ... executed 3 tasks ...
 
-/checkpoint-progress
+/dev-phase-manager:checkpoint-progress
 # → Auto-detect: Completed Task 1, 2, 3
 # → Save progress
 
 # Continue execution
 # ... executed 2 more tasks ...
 
-/checkpoint-progress
+/dev-phase-manager:checkpoint-progress
 # → Auto-detect: Completed Task 1, 2, 3, 4, 5
 # → Update progress
 ```
@@ -139,10 +139,10 @@ Suggested next steps:
 # During execution...
 # Claude warns: Context usage 85%
 
-/checkpoint-progress
+/dev-phase-manager:checkpoint-progress
 # → Save current progress
 /clear
-/resume-plan
+/dev-phase-manager:resume-plan
 # → Resume from saved progress
 ```
 
@@ -150,16 +150,16 @@ Suggested next steps:
 
 ```bash
 # Working on Phase 5
-/checkpoint-progress
+/dev-phase-manager:checkpoint-progress
 # → Save Phase 5 progress
 
 # Switch to urgent task
-/start-phase "Hotfix - Critical Bug"
+/dev-phase-manager:start-phase "Hotfix - Critical Bug"
 # ... handle urgent task ...
-/end-phase
+/dev-phase-manager:end-phase
 
 # Return to Phase 5
-/resume-plan
+/dev-phase-manager:resume-plan
 # → Restore Phase 5 progress
 ```
 
@@ -235,10 +235,10 @@ tool: Bash
 prompt: |
   If git commit command executed successfully,
   and commit message contains "Task" or "feat:" or "fix:",
-  prompt user to consider executing /checkpoint-progress to save progress.
+  prompt user to consider executing /dev-phase-manager:checkpoint-progress to save progress.
 
   Prompt format:
-  "💡 Tip: You can execute /checkpoint-progress to save current progress"
+  "💡 Tip: You can execute /dev-phase-manager:checkpoint-progress to save current progress"
 ```
 
 But this is **optional**, users can fully control when to checkpoint manually.

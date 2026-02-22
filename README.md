@@ -1,4 +1,4 @@
-# Phase Manager
+# Dev Phase Manager
 
 > Professional phase and checkpoint management system for Claude Code
 
@@ -6,7 +6,7 @@
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-Plugin-blue.svg)](https://github.com/anthropics/claude-code)
 [![Version](https://img.shields.io/badge/version-1.0.0-green.svg)](https://github.com/uukuguy/dev-phase-manager/releases)
 
-Phase Manager is a non-invasive workflow enhancement plugin for Claude Code that enables context-aware, multi-phase development workflows with intelligent checkpoint management.
+Dev Phase Manager is a non-invasive workflow enhancement plugin for Claude Code that enables context-aware, multi-phase development workflows with intelligent checkpoint management.
 
 ## 🎯 Key Features
 
@@ -30,6 +30,11 @@ Phase Manager is a non-invasive workflow enhancement plugin for Claude Code that
 - **Graceful Degradation**: Works even when files are missing
 - **Smart Prompts**: Intelligent confirmations and suggestions
 
+### 🔒 Namespace Isolation
+- **No Conflicts**: All commands use `dev-phase-manager:` prefix
+- **Coexist with User Skills**: Won't conflict with your existing `start-phase`, `end-phase` skills
+- **Clean Separation**: Similar to superpowers plugin's namespace approach
+
 ## 📦 Installation
 
 ### Method 1: Direct Installation (Recommended)
@@ -46,7 +51,7 @@ claude-code plugin install https://github.com/uukuguy/dev-phase-manager
 git clone https://github.com/uukuguy/dev-phase-manager.git
 
 # Copy to Claude Code plugins directory
-cp -r phase-manager ~/.claude/plugins/
+cp -r dev-phase-manager ~/.claude/plugins/
 ```
 
 ### Method 3: Development Installation
@@ -54,10 +59,10 @@ cp -r phase-manager ~/.claude/plugins/
 ```bash
 # Clone for development
 git clone https://github.com/uukuguy/dev-phase-manager.git
-cd phase-manager
+cd dev-phase-manager
 
 # Link to plugins directory
-ln -s $(pwd) ~/.claude/plugins/phase-manager
+ln -s $(pwd) ~/.claude/plugins/dev-phase-manager
 ```
 
 ## 🚀 Quick Start
@@ -66,18 +71,18 @@ ln -s $(pwd) ~/.claude/plugins/phase-manager
 
 ```bash
 # 1. Start a new phase
-/start-phase "Phase 1 - Feature Implementation"
+/dev-phase-manager:start-phase "Phase 1 - Feature Implementation"
 
 # 2. Design and plan
 /brainstorming
 /writing-plans
 
 # 3. Save checkpoint before clearing context
-/checkpoint-plan
+/dev-phase-manager:checkpoint-plan
 /clear
 
 # 4. Resume execution
-/resume-plan
+/dev-phase-manager:resume-plan
 /subagent-driven-development
 
 # 5. Complete phase
@@ -107,7 +112,7 @@ ln -s $(pwd) ~/.claude/plugins/phase-manager
 
 ### Core Commands
 
-#### `/checkpoint-plan`
+#### `/dev-phase-manager:checkpoint-plan`
 Save current plan execution state to filesystem.
 
 **Usage:**
@@ -137,7 +142,7 @@ Next steps:
 
 ---
 
-#### `/resume-plan`
+#### `/dev-phase-manager:resume-plan`
 Resume plan execution from saved checkpoint.
 
 **Usage:**
@@ -170,7 +175,7 @@ Please execute: /subagent-driven-development
 
 ---
 
-#### `/checkpoint-progress`
+#### `/dev-phase-manager:checkpoint-progress`
 Update execution progress during implementation.
 
 **Usage:**
@@ -203,7 +208,7 @@ Next steps:
 
 ---
 
-#### `/start-phase`
+#### `/dev-phase-manager:start-phase`
 Start a new phase or resume a suspended phase.
 
 **Usage:**
@@ -246,7 +251,7 @@ Next steps:
 
 ---
 
-#### `/end-phase`
+#### `/dev-phase-manager:end-phase`
 Complete current phase with proper cleanup.
 
 **Usage:**
@@ -286,7 +291,7 @@ Resume phase4 now? (y/n)
 
 ---
 
-#### `/list-plan`
+#### `/dev-phase-manager:list-plan`
 Display comprehensive project status.
 
 **Usage:**
@@ -546,6 +551,51 @@ ln -s $(pwd) ~/.claude/plugins/phase-manager
 - Update documentation
 - Keep commands idempotent
 - Maintain backward compatibility
+
+## ❓ FAQ
+
+### Will this conflict with my existing `start-phase` and `end-phase` skills?
+
+**No, it won't conflict.** Dev Phase Manager uses namespaced commands with the `dev-phase-manager:` prefix (e.g., `/dev-phase-manager:start-phase`), similar to how superpowers uses `superpowers:` prefix. Your existing user skills in `~/.claude/skills/` will continue to work as `/start-phase`, `/end-phase`, etc.
+
+**Example:**
+```bash
+# Your existing user skills (still work)
+/start-phase "My Phase"
+/end-phase
+
+# Dev Phase Manager plugin (namespaced)
+/dev-phase-manager:start-phase "My Phase"
+/dev-phase-manager:end-phase
+```
+
+### Can I use both my custom skills and this plugin?
+
+**Yes!** They coexist peacefully:
+- **User skills** (`~/.claude/skills/`): Called without prefix → `/start-phase`
+- **Plugin skills** (`~/.claude/plugins/dev-phase-manager/`): Called with prefix → `/dev-phase-manager:start-phase`
+
+You can choose which one to use based on your needs, or even use both in different contexts.
+
+### How is this different from superpowers?
+
+**Complementary, not competing:**
+- **Superpowers**: Core development skills (TDD, debugging, planning, code review)
+- **Dev Phase Manager**: Phase and checkpoint management for long-running workflows
+
+Dev Phase Manager is designed to **enhance** superpowers workflows by adding state persistence across `/clear` operations.
+
+### Do I need superpowers to use this plugin?
+
+**No, but recommended.** Dev Phase Manager works standalone, but it's designed to integrate seamlessly with superpowers workflows like:
+- `/brainstorming` → `/writing-plans` → `/dev-phase-manager:checkpoint-plan` → `/clear` → `/dev-phase-manager:resume-plan` → `/subagent-driven-development`
+
+### What happens if I install this and already have phase management skills?
+
+**Nothing breaks.** Your existing skills remain accessible at their original paths. You can:
+1. Keep using your existing skills as-is
+2. Gradually migrate to the plugin's namespaced commands
+3. Use both side-by-side for different projects
 
 ## 📄 License
 

@@ -18,7 +18,7 @@ if [ -f docs/dev/.phase_stack.json ]; then
   suspended_phases=$(jq '.suspended_phases' docs/dev/.phase_stack.json)
 else
   echo "⚠️ Phase stack file not found"
-  echo "May not have executed /start-phase yet"
+  echo "May not have executed /dev-phase-manager:start-phase yet"
   echo ""
 fi
 ```
@@ -36,7 +36,7 @@ if [ -f docs/plans/.checkpoint.json ]; then
   execution_mode=$(jq -r '.execution_mode' <<< "$checkpoint")
 else
   echo "⚠️ Checkpoint file not found"
-  echo "May not have executed /checkpoint-plan yet"
+  echo "May not have executed /dev-phase-manager:checkpoint-plan yet"
   echo ""
 fi
 ```
@@ -88,9 +88,9 @@ Integrate all information and display complete project status:
 
 💡 Suggested Actions:
   1. Continue Phase 5: Execute Task 4
-  2. If need to pause: /checkpoint-progress + /clear
-  3. After completion: /end-phase
-  4. Resume Phase 4: /start-phase --resume phase4
+  2. If need to pause: /dev-phase-manager:checkpoint-progress + /clear
+  3. After completion: /dev-phase-manager:end-phase
+  4. Resume Phase 4: /dev-phase-manager:start-phase --resume phase4
 
 📂 Key Files:
   - Active plan: docs/plans/2026-02-22-mcp-server.md
@@ -133,14 +133,14 @@ fi
 ### Scenario 1: View current status
 
 ```bash
-/list-plan
+/dev-phase-manager:list-plan
 # → Display active phases, suspended phases, progress, memory
 ```
 
 ### Scenario 2: Decide next action
 
 ```bash
-/list-plan
+/dev-phase-manager:list-plan
 # → View suggested actions
 # → Execute corresponding commands based on suggestions
 ```
@@ -149,7 +149,7 @@ fi
 
 ```bash
 # New session starts
-/list-plan
+/dev-phase-manager:list-plan
 # → Understand last work progress
 # → Decide which phase to continue
 ```

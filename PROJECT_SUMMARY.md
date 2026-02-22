@@ -94,12 +94,12 @@ ln -s $(pwd)/phase-manager ~/.claude/plugins/phase-manager
 
 | Command | Description |
 |---------|-------------|
-| `/checkpoint-plan` | Save plan execution state |
-| `/resume-plan` | Resume from checkpoint |
-| `/checkpoint-progress` | Update execution progress |
-| `/start-phase` | Start or resume phase |
-| `/end-phase` | Complete phase with cleanup |
-| `/list-plan` | Display comprehensive status |
+| `/dev-phase-manager:checkpoint-plan` | Save plan execution state |
+| `/dev-phase-manager:resume-plan` | Resume from checkpoint |
+| `/dev-phase-manager:checkpoint-progress` | Update execution progress |
+| `/dev-phase-manager:start-phase` | Start or resume phase |
+| `/dev-phase-manager:end-phase` | Complete phase with cleanup |
+| `/dev-phase-manager:list-plan` | Display comprehensive status |
 
 ## 🎨 Design Principles
 

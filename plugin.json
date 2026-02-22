@@ -1,5 +1,6 @@
 {
   "name": "dev-phase-manager",
+  "displayName": "Dev Phase Manager",
   "version": "1.0.0",
   "description": "Professional phase and checkpoint management system for Claude Code - enabling context-aware, multi-phase development workflows",
   "author": "uukuguy",
@@ -7,13 +8,13 @@
   "repository": "https://github.com/uukuguy/dev-phase-manager",
   "homepage": "https://github.com/uukuguy/dev-phase-manager#readme",
   "bugs": "https://github.com/uukuguy/dev-phase-manager/issues",
-  "commands": {
-    "checkpoint-plan": "commands/checkpoint-plan.md",
-    "resume-plan": "commands/resume-plan.md",
-    "checkpoint-progress": "commands/checkpoint-progress.md",
-    "start-phase": "commands/start-phase.md",
-    "end-phase": "commands/end-phase.md",
-    "list-plan": "commands/list-plan.md"
+  "skills": {
+    "checkpoint-plan": "skills/checkpoint-plan.md",
+    "resume-plan": "skills/resume-plan.md",
+    "checkpoint-progress": "skills/checkpoint-progress.md",
+    "start-phase": "skills/start-phase.md",
+    "end-phase": "skills/end-phase.md",
+    "list-plan": "skills/list-plan.md"
   },
   "keywords": [
     "phase-management",

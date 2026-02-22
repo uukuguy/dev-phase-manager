@@ -25,8 +25,8 @@ else
     echo "⚠️ No active phases"
     echo ""
     echo "Possible reasons:"
-    echo "1. Already executed /end-phase"
-    echo "2. Never executed /start-phase"
+    echo "1. Already executed /dev-phase-manager:end-phase"
+    echo "2. Never executed /dev-phase-manager:start-phase"
     echo ""
 
     # Check if there are suspended phases
@@ -36,8 +36,8 @@ else
       jq -r '.suspended_phases[] | "  - \(.name) (\(.progress) completed)"' docs/dev/.phase_stack.json
       echo ""
       echo "Suggested actions:"
-      echo "1. /start-phase --resume <phase_id>"
-      echo "2. /list-plan"
+      echo "1. /dev-phase-manager:start-phase --resume <phase_id>"
+      echo "2. /dev-phase-manager:list-plan"
     fi
 
     read -p "Still execute end-phase? (y/n) " answer
@@ -173,7 +173,7 @@ Check and commit changes:
 # Check if there are uncommitted changes
 if git diff --quiet && git diff --cached --quiet; then
   echo "⚠️ No uncommitted changes"
-  echo "May have already executed /end-phase"
+  echo "May have already executed /dev-phase-manager:end-phase"
   read -p "Still commit? (y/n) " answer
   if [ "$answer" != "y" ]; then
     skip_commit=true
@@ -232,9 +232,9 @@ if [ "$suspended_count" -gt 0 ]; then
   jq -r '.suspended_phases[] | "  \(.name)\n  Suspended: \(.suspended_at)\n  Progress: \(.progress)\n  "' docs/dev/.phase_stack.json
 
   echo "Suggested actions:"
-  echo "1. /start-phase --resume <phase_id> - Resume and continue"
+  echo "1. /dev-phase-manager:start-phase --resume <phase_id> - Resume and continue"
   echo "2. /clear - Clean context then resume"
-  echo "3. /list-plan - View all phase status"
+  echo "3. /dev-phase-manager:list-plan - View all phase status"
   echo ""
 
   # Get first suspended phase ID
@@ -243,7 +243,7 @@ if [ "$suspended_count" -gt 0 ]; then
   read -p "Resume ${first_suspended} now? (y/n) " answer
   if [ "$answer" = "y" ]; then
     echo ""
-    echo "Please execute: /start-phase --resume ${first_suspended}"
+    echo "Please execute: /dev-phase-manager:start-phase --resume ${first_suspended}"
   fi
 fi
 ```
@@ -253,9 +253,9 @@ fi
 ### Scenario 1: Normal phase completion
 
 ```bash
-/start-phase "Phase 5"
+/dev-phase-manager:start-phase "Phase 5"
 # ... work ...
-/end-phase
+/dev-phase-manager:end-phase
 # → Save memory
 # → Update documentation
 # → Commit git
@@ -265,20 +265,20 @@ fi
 ### Scenario 2: Resume suspended phase after completion
 
 ```bash
-/end-phase
+/dev-phase-manager:end-phase
 # → Phase 5 completed
 # → Detect suspended Phase 4
 # → Prompt: Resume Phase 4? (y)
-# → Guide user to execute /start-phase --resume phase4
+# → Guide user to execute /dev-phase-manager:start-phase --resume phase4
 ```
 
 ### Scenario 3: Accidental consecutive end-phase
 
 ```bash
-/end-phase
+/dev-phase-manager:end-phase
 # → Phase 5 completed
 
-/end-phase
+/dev-phase-manager:end-phase
 # → ⚠️ No active phases
 # → Still execute? (n)
 # → Exit, prevent duplicate operations

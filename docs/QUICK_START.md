@@ -92,8 +92,8 @@ claude-code plugin install https://github.com/uukuguy/dev-phase-manager
 
 ## Tips
 
-1. **Save Often**: Use `/checkpoint-plan` before `/clear`
-2. **Check Status**: Use `/list-plan` to see what's active
+1. **Save Often**: Use `/dev-phase-manager:checkpoint-plan` before `/clear`
+2. **Check Status**: Use `/dev-phase-manager:list-plan` to see what's active
 3. **Name Phases**: Use descriptive phase names
 4. **Resume Suspended**: Don't forget suspended phases
 

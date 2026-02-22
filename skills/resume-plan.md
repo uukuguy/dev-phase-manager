@@ -26,11 +26,11 @@ if [ ! -f "$checkpoint_file" ]; then
   echo "⚠️ Checkpoint file not found"
   echo ""
   echo "Possible reasons:"
-  echo "1. /checkpoint-plan was never executed"
+  echo "1. /dev-phase-manager:checkpoint-plan was never executed"
   echo "2. Checkpoint has been cleaned up"
   echo ""
   echo "Suggested actions:"
-  echo "1. /list-plan - View current plan"
+  echo "1. /dev-phase-manager:list-plan - View current plan"
   echo "2. /writing-plans - Create new plan"
   exit 1
 fi
@@ -141,9 +141,9 @@ The skill will automatically skip completed tasks and start from Task 4.
 ### Scenario 1: First execution after design completion
 
 ```bash
-/checkpoint-plan    # Save design phase
+/dev-phase-manager:checkpoint-plan    # Save design phase
 /clear
-/resume-plan        # Display progress, select execution mode
+/dev-phase-manager:resume-plan        # Display progress, select execution mode
 # Select: 1 (subagent-driven-development)
 /subagent-driven-development
 ```
@@ -152,9 +152,9 @@ The skill will automatically skip completed tasks and start from Task 4.
 
 ```bash
 # After executing 3 tasks
-/checkpoint-plan    # Save progress
+/dev-phase-manager:checkpoint-plan    # Save progress
 /clear
-/resume-plan        # Display progress: 3/10 completed
+/dev-phase-manager:resume-plan        # Display progress: 3/10 completed
 # Continue with same mode: y
 /subagent-driven-development
 ```
@@ -162,7 +162,7 @@ The skill will automatically skip completed tasks and start from Task 4.
 ### Scenario 3: Switch execution mode
 
 ```bash
-/resume-plan
+/dev-phase-manager:resume-plan
 # Last used: subagent-driven-development
 # Continue with same mode? n
 # Select: 2 (executing-plans)
@@ -183,8 +183,8 @@ Plan modified: 2026-02-22 18:00
 
 Suggested actions:
 1. View plan changes: cat docs/plans/2026-02-22-mcp-server.md
-2. Update checkpoint: /checkpoint-plan
-3. Continue execution: /resume-plan
+2. Update checkpoint: /dev-phase-manager:checkpoint-plan
+3. Continue execution: /dev-phase-manager:resume-plan
 
 Still use old checkpoint? (y/n)
 ```
@@ -219,7 +219,7 @@ Plan: docs/plans/2026-02-22-mcp-server.md
 ⏸️  Suspended phases:
   Phase 4 - Cognitive Layer (60% completed)
 
-Tip: After completing current phase, use /start-phase --resume phase4 to restore
+Tip: After completing current phase, use /dev-phase-manager:start-phase --resume phase4 to restore
 ```
 
 ## Integration with Third-party Skills

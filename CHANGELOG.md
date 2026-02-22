@@ -12,12 +12,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Checkpoint system for state persistence across `/clear` operations
 - Phase stack management for multi-phase parallel workflows
 - Six core commands:
-  - `/checkpoint-plan` - Save plan execution state
-  - `/resume-plan` - Resume from checkpoint
-  - `/checkpoint-progress` - Update execution progress
-  - `/start-phase` - Start or resume phases
-  - `/end-phase` - Complete phase with cleanup
-  - `/list-plan` - Display comprehensive status
+  - `/dev-phase-manager:checkpoint-plan` - Save plan execution state
+  - `/dev-phase-manager:resume-plan` - Resume from checkpoint
+  - `/dev-phase-manager:checkpoint-progress` - Update execution progress
+  - `/dev-phase-manager:start-phase` - Start or resume phases
+  - `/dev-phase-manager:end-phase` - Complete phase with cleanup
+  - `/dev-phase-manager:list-plan` - Display comprehensive status
 - Non-invasive integration with superpowers plugin
 - Automatic progress detection from git history
 - Idempotency checks and safety features
