@@ -35,11 +35,11 @@ fi
 echo ""
 echo "3. Checking skills directory..."
 if [ -d ~/.claude/plugins/dev-phase-manager/skills ]; then
-    SKILL_COUNT=$(ls ~/.claude/plugins/dev-phase-manager/skills/*.md 2>/dev/null | wc -l)
+    SKILL_COUNT=$(find ~/.claude/plugins/dev-phase-manager/skills -name "SKILL.md" 2>/dev/null | wc -l)
     echo "   ✅ Skills directory found"
     echo "   Skills count: $SKILL_COUNT"
     echo "   Skills:"
-    ls ~/.claude/plugins/dev-phase-manager/skills/*.md | xargs -n1 basename | sed 's/^/      - /'
+    find ~/.claude/plugins/dev-phase-manager/skills -name "SKILL.md" | xargs -n1 dirname | xargs -n1 basename | sed 's/^/      - /'
 else
     echo "   ❌ Skills directory not found"
     exit 1
@@ -60,12 +60,17 @@ done
 # Test skill file structure
 echo ""
 echo "5. Validating skill file structure..."
-for skill in ~/.claude/plugins/dev-phase-manager/skills/*.md; do
-    SKILL_NAME=$(basename "$skill")
-    if head -5 "$skill" | grep -q "^---$"; then
-        echo "   ✅ $SKILL_NAME (has YAML frontmatter)"
+for skill_dir in ~/.claude/plugins/dev-phase-manager/skills/*/; do
+    SKILL_NAME=$(basename "$skill_dir")
+    SKILL_FILE="$skill_dir/SKILL.md"
+    if [ -f "$SKILL_FILE" ]; then
+        if head -5 "$SKILL_FILE" | grep -q "^---$"; then
+            echo "   ✅ $SKILL_NAME (has YAML frontmatter)"
+        else
+            echo "   ⚠️  $SKILL_NAME (missing YAML frontmatter)"
+        fi
     else
-        echo "   ⚠️  $SKILL_NAME (missing YAML frontmatter)"
+        echo "   ❌ $SKILL_NAME (SKILL.md not found)"
     fi
 done
 
