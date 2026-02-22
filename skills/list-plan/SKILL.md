@@ -1,4 +1,5 @@
 ---
+name: list-plan
 description: Display comprehensive project status
 ---
 

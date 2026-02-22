@@ -1,4 +1,5 @@
 ---
+name: checkpoint-progress
 description: Update execution progress to checkpoint
 ---
 

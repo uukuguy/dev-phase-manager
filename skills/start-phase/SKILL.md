@@ -1,4 +1,5 @@
 ---
+name: start-phase
 description: Start new phase or resume suspended phase
 args:
   - name: phase_name

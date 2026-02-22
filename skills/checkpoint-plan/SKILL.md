@@ -1,4 +1,5 @@
 ---
+name: checkpoint-plan
 description: Save plan execution state for recovery after clear
 ---
 

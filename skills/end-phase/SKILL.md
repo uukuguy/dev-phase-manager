@@ -1,4 +1,5 @@
 ---
+name: end-phase
 description: Complete phase with cleanup
 ---
 

@@ -1,4 +1,5 @@
 ---
+name: resume-plan
 description: Resume plan execution from checkpoint
 ---
 
