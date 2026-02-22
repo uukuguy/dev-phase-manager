@@ -2,7 +2,9 @@
   "name": "dev-phase-manager",
   "description": "Professional phase and checkpoint management system for Claude Code - enabling context-aware, multi-phase development workflows",
   "version": "1.0.0",
-  "author": "uukuguy",
+  "author": {
+    "name": "uukuguy"
+  },
   "license": "MIT",
   "repository": "https://github.com/uukuguy/dev-phase-manager",
   "homepage": "https://github.com/uukuguy/dev-phase-manager#readme"
