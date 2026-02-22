@@ -2,7 +2,7 @@
 
 ## 📦 Project Information
 
-- **Name**: Phase Manager
+- **Name**: Dev Phase Manager
 - **Version**: 1.0.0
 - **Repository**: https://github.com/uukuguy/dev-phase-manager
 - **License**: MIT
@@ -10,24 +10,24 @@
 
 ## 🎯 Project Overview
 
-Phase Manager is a professional phase and checkpoint management system for Claude Code that enables context-aware, multi-phase development workflows with intelligent state persistence.
+Dev Phase Manager is a professional phase and checkpoint management system for Claude Code that enables context-aware, multi-phase development workflows with intelligent state persistence.
 
 ## 📊 Project Statistics
 
-- **Total Files**: 15
-- **Commands**: 6
-- **Documentation Pages**: 5
-- **Lines of Code**: ~3,000
+- **Total Files**: 16
+- **Skills**: 6
+- **Documentation Pages**: 6
+- **Lines of Code**: ~3,500
 - **Languages**: Markdown (100%)
 
 ## 📁 Project Structure
 
 ```
-phase-manager/
+dev-phase-manager/
 ├── .github/
 │   └── workflows/
 │       └── validate.yml          # CI/CD validation workflow
-├── commands/                      # Command implementations
+├── skills/                        # Skill implementations
 │   ├── checkpoint-plan.md        # Save plan state
 │   ├── checkpoint-progress.md    # Update progress
 │   ├── end-phase.md              # Complete phase
@@ -40,8 +40,12 @@ phase-manager/
 ├── .gitignore                     # Git ignore rules
 ├── CHANGELOG.md                   # Version history
 ├── CONTRIBUTING.md                # Contribution guidelines
+├── GITHUB_SETUP.md                # GitHub configuration guide
 ├── LICENSE                        # MIT License
+├── MIGRATION.md                   # Migration guide
 ├── plugin.json                    # Plugin manifest
+├── PROJECT_SUMMARY.md             # This file
+├── RELEASE_CHECKLIST.md           # Release checklist
 └── README.md                      # Main documentation
 ```
 

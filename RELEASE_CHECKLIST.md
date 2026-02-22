@@ -140,7 +140,7 @@ gh release create v1.0.0 \
 claude-code plugin install https://github.com/uukuguy/dev-phase-manager
 
 # Verify commands
-/list-plan
+/dev-phase-manager:list-plan
 ```
 
 ## Release Notes Template

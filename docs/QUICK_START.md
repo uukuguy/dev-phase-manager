@@ -14,7 +14,7 @@ claude-code plugin install https://github.com/uukuguy/dev-phase-manager
 ### 1. Start Your First Phase
 
 ```bash
-/start-phase "My First Feature"
+/dev-phase-manager:start-phase "My First Feature"
 ```
 
 ### 2. Design and Plan
@@ -31,7 +31,7 @@ claude-code plugin install https://github.com/uukuguy/dev-phase-manager
 
 ```bash
 # Save state before clearing context
-/checkpoint-plan
+/dev-phase-manager:checkpoint-plan
 
 # Clear context
 /clear
@@ -41,7 +41,7 @@ claude-code plugin install https://github.com/uukuguy/dev-phase-manager
 
 ```bash
 # Resume from checkpoint
-/resume-plan
+/dev-phase-manager:resume-plan
 
 # Execute the plan
 /subagent-driven-development
@@ -51,7 +51,7 @@ claude-code plugin install https://github.com/uukuguy/dev-phase-manager
 
 ```bash
 # Finish the phase
-/end-phase
+/dev-phase-manager:end-phase
 ```
 
 ## Common Workflows
@@ -60,26 +60,26 @@ claude-code plugin install https://github.com/uukuguy/dev-phase-manager
 
 ```bash
 # Working on Feature A
-/start-phase "Feature A"
+/dev-phase-manager:start-phase "Feature A"
 # ... 60% complete ...
 
 # Urgent bug appears
-/start-phase "Critical Bugfix"
+/dev-phase-manager:start-phase "Critical Bugfix"
 # → Suspend Feature A? (y)
 # ... fix bug ...
-/end-phase
+/dev-phase-manager:end-phase
 
 # Resume Feature A
-/start-phase --resume featurea
+/dev-phase-manager:start-phase --resume featurea
 ```
 
 ### Managing Context
 
 ```bash
 # Context getting full
-/checkpoint-progress
+/dev-phase-manager:checkpoint-progress
 /clear
-/resume-plan
+/dev-phase-manager:resume-plan
 # Continue seamlessly
 ```
 
@@ -87,7 +87,7 @@ claude-code plugin install https://github.com/uukuguy/dev-phase-manager
 
 ```bash
 # View all phases and progress
-/list-plan
+/dev-phase-manager:list-plan
 ```
 
 ## Tips
