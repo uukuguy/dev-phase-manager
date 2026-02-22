@@ -42,7 +42,8 @@ dev-phase-manager/
 ├── CONTRIBUTING.md                # Contribution guidelines
 ├── GITHUB_SETUP.md                # GitHub configuration guide
 ├── LICENSE                        # MIT License
-├── plugin.json                    # Plugin manifest
+├── .claude-plugin/
+│   └── plugin.json                    # Plugin manifest
 ├── PROJECT_SUMMARY.md             # This file
 ├── RELEASE_CHECKLIST.md           # Release checklist
 └── README.md                      # Main documentation

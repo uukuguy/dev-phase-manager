@@ -20,10 +20,10 @@ fi
 # Verify plugin.json
 echo ""
 echo "2. Verifying plugin.json..."
-if [ -f ~/.claude/plugins/dev-phase-manager/plugin.json ]; then
+if [ -f ~/.claude/plugins/dev-phase-manager/.claude-plugin/plugin.json ]; then
     echo "   ✅ plugin.json found"
-    NAME=$(cat ~/.claude/plugins/dev-phase-manager/plugin.json | python3 -c "import sys, json; print(json.load(sys.stdin)['name'])")
-    VERSION=$(cat ~/.claude/plugins/dev-phase-manager/plugin.json | python3 -c "import sys, json; print(json.load(sys.stdin)['version'])")
+    NAME=$(cat ~/.claude/plugins/dev-phase-manager/.claude-plugin/plugin.json | python3 -c "import sys, json; print(json.load(sys.stdin)['name'])")
+    VERSION=$(cat ~/.claude/plugins/dev-phase-manager/.claude-plugin/plugin.json | python3 -c "import sys, json; print(json.load(sys.stdin)['version'])")
     echo "   Name: $NAME"
     echo "   Version: $VERSION"
 else
