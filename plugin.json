@@ -1,0 +1,49 @@
+{
+  "name": "phase-manager",
+  "version": "1.0.0",
+  "description": "Professional phase and checkpoint management system for Claude Code - enabling context-aware, multi-phase development workflows",
+  "author": "uukuguy",
+  "license": "MIT",
+  "repository": "https://github.com/uukuguy/phase-manager",
+  "homepage": "https://github.com/uukuguy/phase-manager#readme",
+  "bugs": "https://github.com/uukuguy/phase-manager/issues",
+  "commands": {
+    "checkpoint-plan": "commands/checkpoint-plan.md",
+    "resume-plan": "commands/resume-plan.md",
+    "checkpoint-progress": "commands/checkpoint-progress.md",
+    "start-phase": "commands/start-phase.md",
+    "end-phase": "commands/end-phase.md",
+    "list-plan": "commands/list-plan.md"
+  },
+  "keywords": [
+    "phase-management",
+    "checkpoint-system",
+    "workflow",
+    "context-management",
+    "planning",
+    "productivity",
+    "development-workflow",
+    "superpowers-integration"
+  ],
+  "compatibility": {
+    "claudeCode": ">=1.0.0"
+  },
+  "integrations": {
+    "superpowers": {
+      "compatible": true,
+      "enhances": [
+        "brainstorming",
+        "writing-plans",
+        "subagent-driven-development",
+        "executing-plans"
+      ]
+    },
+    "mcp": {
+      "required": false,
+      "recommended": [
+        "claude-mem",
+        "memory"
+      ]
+    }
+  }
+}

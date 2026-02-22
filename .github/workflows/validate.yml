@@ -1,0 +1,82 @@
+name: Validate Plugin
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Validate plugin.json
+      run: |
+        if [ ! -f plugin.json ]; then
+          echo "Error: plugin.json not found"
+          exit 1
+        fi
+
+        # Validate JSON syntax
+        if ! jq empty plugin.json 2>/dev/null; then
+          echo "Error: plugin.json is not valid JSON"
+          exit 1
+        fi
+
+        # Check required fields
+        for field in name version description commands; do
+          if ! jq -e ".${field}" plugin.json > /dev/null; then
+            echo "Error: Missing required field: ${field}"
+            exit 1
+          fi
+        done
+
+        echo "✅ plugin.json is valid"
+
+    - name: Validate command files
+      run: |
+        # Check if all commands in plugin.json exist
+        jq -r '.commands | to_entries[] | .value' plugin.json | while read -r cmd; do
+          if [ ! -f "${cmd}" ]; then
+            echo "Error: Command file not found: ${cmd}"
+            exit 1
+          fi
+
+          # Check for YAML frontmatter
+          if ! head -n 1 "${cmd}" | grep -q "^---$"; then
+            echo "Error: Missing YAML frontmatter in: ${cmd}"
+            exit 1
+          fi
+
+          echo "✅ ${cmd} is valid"
+        done
+
+    - name: Check documentation
+      run: |
+        required_docs=("README.md" "LICENSE" "CHANGELOG.md")
+
+        for doc in "${required_docs[@]}"; do
+          if [ ! -f "${doc}" ]; then
+            echo "Error: Missing required file: ${doc}"
+            exit 1
+          fi
+          echo "✅ ${doc} exists"
+        done
+
+    - name: Summary
+      run: |
+        plugin_name=$(jq -r '.name' plugin.json)
+        plugin_version=$(jq -r '.version' plugin.json)
+        command_count=$(jq -r '.commands | length' plugin.json)
+
+        echo "## Validation Summary" >> "${GITHUB_STEP_SUMMARY}"
+        echo "✅ All checks passed!" >> "${GITHUB_STEP_SUMMARY}"
+        echo "" >> "${GITHUB_STEP_SUMMARY}"
+        echo "### Plugin Info" >> "${GITHUB_STEP_SUMMARY}"
+        echo "- **Name**: ${plugin_name}" >> "${GITHUB_STEP_SUMMARY}"
+        echo "- **Version**: ${plugin_version}" >> "${GITHUB_STEP_SUMMARY}"
+        echo "- **Commands**: ${command_count}" >> "${GITHUB_STEP_SUMMARY}"
