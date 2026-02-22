@@ -554,29 +554,6 @@ ln -s $(pwd) ~/.claude/plugins/phase-manager
 
 ## ❓ FAQ
 
-### Will this conflict with my existing `start-phase` and `end-phase` skills?
-
-**No, it won't conflict.** Dev Phase Manager uses namespaced commands with the `dev-phase-manager:` prefix (e.g., `/dev-phase-manager:start-phase`), similar to how superpowers uses `superpowers:` prefix. Your existing user skills in `~/.claude/skills/` will continue to work as `/start-phase`, `/end-phase`, etc.
-
-**Example:**
-```bash
-# Your existing user skills (still work)
-/start-phase "My Phase"
-/end-phase
-
-# Dev Phase Manager plugin (namespaced)
-/dev-phase-manager:start-phase "My Phase"
-/dev-phase-manager:end-phase
-```
-
-### Can I use both my custom skills and this plugin?
-
-**Yes!** They coexist peacefully:
-- **User skills** (`~/.claude/skills/`): Called without prefix → `/start-phase`
-- **Plugin skills** (`~/.claude/plugins/dev-phase-manager/`): Called with prefix → `/dev-phase-manager:start-phase`
-
-You can choose which one to use based on your needs, or even use both in different contexts.
-
 ### How is this different from superpowers?
 
 **Complementary, not competing:**
@@ -590,12 +567,9 @@ Dev Phase Manager is designed to **enhance** superpowers workflows by adding sta
 **No, but recommended.** Dev Phase Manager works standalone, but it's designed to integrate seamlessly with superpowers workflows like:
 - `/brainstorming` → `/writing-plans` → `/dev-phase-manager:checkpoint-plan` → `/clear` → `/dev-phase-manager:resume-plan` → `/subagent-driven-development`
 
-### What happens if I install this and already have phase management skills?
+### Why use the `dev-phase-manager:` prefix?
 
-**Nothing breaks.** Your existing skills remain accessible at their original paths. You can:
-1. Keep using your existing skills as-is
-2. Gradually migrate to the plugin's namespaced commands
-3. Use both side-by-side for different projects
+The namespace prefix follows Claude Code plugin conventions (similar to `superpowers:` prefix) to ensure clean separation and avoid naming conflicts with other plugins or user-defined skills.
 
 ## 📄 License
 
