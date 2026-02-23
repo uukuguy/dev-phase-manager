@@ -222,36 +222,73 @@ If there are major architecture-level adjustments, update related design documen
 # Record new architecture decisions and implementation details
 ```
 
-### 4. Commit Git
+### 4. Commit Git — Ensure Clean Working Tree
 
-Check and commit changes:
+**Principle**: `end-phase` marks the completion of a phase. The working tree MUST be clean when a phase ends. All phase work — code, tests, docs, config — must be committed.
+
+#### 4.1 Check for uncommitted code changes
 
 ```bash
-# Check if there are uncommitted changes
-if git diff --quiet && git diff --cached --quiet; then
-  echo "⚠️ No uncommitted changes"
-  echo "May have already executed /end-phase"
-  read -p "Still commit? (y/n) " answer
-  if [ "$answer" != "y" ]; then
-    skip_commit=true
-  fi
-fi
+# Get phase name early
+phase_name=$(jq -r '.active_phases[0].name // "Current Phase"' docs/dev/.phase_stack.json 2>/dev/null)
 
-if [ "$skip_commit" != "true" ]; then
-  # Get phase name
-  phase_name=$(jq -r '.active_phases[0].name // "Current Phase"' docs/dev/.phase_stack.json 2>/dev/null)
+# Check working tree status
+git status --porcelain
+```
 
-  # Commit documentation updates
-  git add docs/
-  git commit -m "docs: complete ${phase_name}
+#### 4.2 Commit code changes first (if any)
+
+If there are uncommitted code changes (modified/untracked files outside `docs/`):
+
+```bash
+# Show summary of uncommitted changes
+git diff --stat
+git status -sb
+
+# Determine logical commit grouping:
+# - If changes belong to a single logical unit → one commit
+# - If changes span multiple logical units → multiple commits in order
+# - Use git log to match existing commit message style
+
+# Example: single logical commit
+git add <relevant-files>
+git commit -m "feat(component): description of phase work
+
+Co-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>"
+```
+
+**Rules for code commits**:
+- Review `git diff` to understand what changed before committing
+- Group related changes into logical commits (prefer fewer, meaningful commits over many trivial ones)
+- Never commit secrets (`.env`, `*.key`, `credentials.*`)
+- Use conventional commit prefixes: `feat`, `fix`, `refactor`, `test`, `chore`
+- If unsure about grouping, ask the user
+
+#### 4.3 Commit documentation changes
+
+After code is committed, commit the documentation updates from Steps 2-3:
+
+```bash
+git add docs/
+git commit -m "docs: complete ${phase_name}
 
 - Update WORK_LOG.md
 - Update NEXT_SESSION_GUIDE.md
-- Save phase completion memory
+- Archive phase memory
 
 Co-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>"
-fi
 ```
+
+#### 4.4 Verify clean working tree
+
+```bash
+# Final check — working tree must be clean
+git status --porcelain
+# Expected: empty output (nothing uncommitted)
+# If not empty: warn user about remaining uncommitted files
+```
+
+**IMPORTANT**: Do NOT proceed to Step 5 (Clean Phase Stack) until the working tree is clean or the user explicitly acknowledges remaining uncommitted files.
 
 ### 5. Clean Phase Stack
 
@@ -364,4 +401,4 @@ Does not involve modifying superpowers skills.
 1. **Idempotency**: Multiple calls should be safe, with check mechanisms
 2. **Memory quality**: Saved memory should contain sufficient context
 3. **Document sync**: Ensure WORK_LOG and NEXT_SESSION_GUIDE stay current
-4. **Git commits**: Only commit documentation changes, not code (code should be committed during development)
+4. **Clean working tree**: `end-phase` MUST ensure all phase changes (code + docs) are committed. A phase cannot be considered "ended" if work remains uncommitted. Code commits come first, then documentation commits.
