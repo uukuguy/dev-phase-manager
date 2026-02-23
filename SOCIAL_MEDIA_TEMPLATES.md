@@ -141,7 +141,7 @@ So I built Dev Phase Manager - a plugin that adds checkpoint and phase managemen
 
 3. **Non-Invasive Integration**:
    - File-based state transfer (no modifications to other plugins)
-   - Namespace isolation (dev-phase-manager: prefix)
+   - Direct skill invocation (no namespace prefix)
    - Works alongside superpowers plugin
 
 **Technical Highlights:**
@@ -160,14 +160,14 @@ I chose file-based state transfer over in-memory state to ensure:
 **Use Case Example:**
 ```bash
 # Day 1: Start feature, work for hours
-/dev-phase-manager:start-phase "User Auth"
+/start-phase "User Auth"
 /brainstorming
 /writing-plans
-/dev-phase-manager:checkpoint-plan
+/checkpoint-plan
 /clear
 
 # Day 2: Resume seamlessly
-/dev-phase-manager:resume-plan
+/resume-plan
 /subagent-driven-development
 ```
 
@@ -207,7 +207,7 @@ A checkpoint system that saves state before clearing and restores it after:
    - Cons: Slightly slower (acceptable trade-off)
 
 2. **Non-invasive integration**: Works alongside other plugins without modifications
-   - Uses namespace prefix (dev-phase-manager:)
+   - Direct skill invocation (no namespace prefix)
    - File-based communication (no shared state)
 
 3. **Git history parsing**: Auto-detects completed tasks
@@ -273,9 +273,9 @@ Claude Code 工作流增强：我是如何解决上下文丢失问题的
 在 /clear 之前保存状态，之后恢复：
 
 ```bash
-/dev-phase-manager:checkpoint-plan  # 保存状态
+/checkpoint-plan  # 保存状态
 /clear                               # 清理上下文
-/dev-phase-manager:resume-plan      # 恢复状态
+/resume-plan      # 恢复状态
 ```
 
 **2. 阶段栈管理**
@@ -283,17 +283,17 @@ Claude Code 工作流增强：我是如何解决上下文丢失问题的
 支持多阶段并行工作，可以暂停当前阶段去处理紧急任务：
 
 ```bash
-/dev-phase-manager:start-phase "功能 A"
+/start-phase "功能 A"
 # ... 工作中 ...
 
 # 紧急 bug 出现
-/dev-phase-manager:start-phase "紧急修复"
+/start-phase "紧急修复"
 # → 是否暂停功能 A？(y)
 # ... 修复 bug ...
-/dev-phase-manager:end-phase
+/end-phase
 
 # 恢复功能 A
-/dev-phase-manager:start-phase --resume featurea
+/start-phase --resume featurea
 ```
 
 **3. 智能进度检测**
@@ -307,9 +307,9 @@ Claude Code 工作流增强：我是如何解决上下文丢失问题的
 ```bash
 /brainstorming                           # 讨论设计
 /writing-plans                           # 编写计划
-/dev-phase-manager:checkpoint-plan       # 保存状态
+/checkpoint-plan       # 保存状态
 /clear                                   # 清理上下文
-/dev-phase-manager:resume-plan           # 恢复状态
+/resume-plan           # 恢复状态
 /subagent-driven-development             # 执行计划
 ```
 
@@ -321,7 +321,7 @@ Claude Code 工作流增强：我是如何解决上下文丢失问题的
 
 不修改其他插件，通过文件进行状态传递：
 - 使用 JSON 文件保存状态
-- 命名空间隔离（dev-phase-manager: 前缀）
+- 直接技能调用（无需命名空间前缀）
 - 与其他插件完全解耦
 
 **2. 幂等性保证**
@@ -386,12 +386,12 @@ Claude Code 工作流增强：我是如何解决上下文丢失问题的
 
 某个功能开发需要 3 天时间，每天工作结束前：
 ```bash
-/dev-phase-manager:checkpoint-plan
+/checkpoint-plan
 ```
 
 第二天开始工作时：
 ```bash
-/dev-phase-manager:resume-plan
+/resume-plan
 ```
 
 无缝继续，节省了大量重建上下文的时间。
@@ -400,11 +400,11 @@ Claude Code 工作流增强：我是如何解决上下文丢失问题的
 
 正在开发功能 A（完成 60%），突然需要修复紧急 bug：
 ```bash
-/dev-phase-manager:start-phase "紧急修复"
+/start-phase "紧急修复"
 # 自动暂停功能 A
 # 修复完成后
-/dev-phase-manager:end-phase
-/dev-phase-manager:start-phase --resume featurea
+/end-phase
+/start-phase --resume featurea
 # 立即恢复到 60% 的状态
 ```
 
@@ -412,9 +412,9 @@ Claude Code 工作流增强：我是如何解决上下文丢失问题的
 
 实现过程中上下文快满了：
 ```bash
-/dev-phase-manager:checkpoint-progress
+/checkpoint-progress
 /clear
-/dev-phase-manager:resume-plan
+/resume-plan
 # 继续工作，状态完整保留
 ```
 
@@ -533,7 +533,7 @@ If you're working with AI development tools, I'd love to hear your thoughts!
 3. 无缝集成
    - 与 superpowers 插件配合
    - 非侵入式设计
-   - 命名空间隔离
+   - 直接技能调用
 
 **技术栈：**
 - 纯 Markdown 实现

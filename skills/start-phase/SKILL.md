@@ -62,8 +62,8 @@ Restored files:
 - NEXT_SESSION_GUIDE-phase4.md → NEXT_SESSION_GUIDE.md
 
 Suggested next steps:
-1. /dev-phase-manager:resume-plan - View execution progress
-2. /dev-phase-manager:list-plan - View complete plan
+1. /resume-plan - View execution progress
+2. /list-plan - View complete plan
 ```
 
 Then skip to step 4 (Read NEXT_SESSION_GUIDE).
@@ -82,7 +82,7 @@ You want to start new phase: Phase 5 - MCP Server
 Options:
 1. Continue current phase Phase 4 (recommended)
 2. Suspend Phase 4, start Phase 5
-3. Cancel, execute /dev-phase-manager:end-phase first to end Phase 4
+3. Cancel, execute /end-phase first to end Phase 4
 
 Please select (1/2/3):
 ```
@@ -122,7 +122,7 @@ Saved files:
 - .checkpoint.json → .checkpoint-phase4.json
 - NEXT_SESSION_GUIDE.md → NEXT_SESSION_GUIDE-phase4.md
 
-Tip: After completing Phase 5, use /dev-phase-manager:start-phase --resume phase4 to restore
+Tip: After completing Phase 5, use /start-phase --resume phase4 to restore
 ```
 
 ### 4. Read NEXT_SESSION_GUIDE
@@ -219,7 +219,7 @@ Phase stack: 1 active, 1 suspended
 Suggested next steps:
 1. /brainstorming - Discuss design approach
 2. /writing-plans - Create implementation plan
-3. /dev-phase-manager:list-plan - View complete plan
+3. /list-plan - View complete plan
 ```
 
 ## Use Cases
@@ -227,7 +227,7 @@ Suggested next steps:
 ### Scenario 1: Start new phase (no conflict)
 
 ```bash
-/dev-phase-manager:start-phase "Phase 5 - MCP Server"
+/start-phase "Phase 5 - MCP Server"
 # → No active phase
 # → Directly start Phase 5
 ```
@@ -236,7 +236,7 @@ Suggested next steps:
 
 ```bash
 # Phase 4 in progress
-/dev-phase-manager:start-phase "Phase 5 - MCP Server"
+/start-phase "Phase 5 - MCP Server"
 # → Detect Phase 4 active
 # → Ask: Continue/Suspend/Cancel
 # → Select: Suspend
@@ -246,7 +246,7 @@ Suggested next steps:
 ### Scenario 3: Resume suspended phase
 
 ```bash
-/dev-phase-manager:start-phase --resume phase4
+/start-phase --resume phase4
 # → Restore Phase 4 from suspended_phases
 # → Restore checkpoint and NEXT_SESSION_GUIDE
 # → Phase 4 becomes active again
@@ -255,7 +255,7 @@ Suggested next steps:
 ### Scenario 4: Continue current phase
 
 ```bash
-/dev-phase-manager:start-phase
+/start-phase
 # → No phase_name provided
 # → Continue current active phase
 # → Reload memory and guide

@@ -5,8 +5,11 @@ Get started with Phase Manager in 5 minutes.
 ## Installation
 
 ```bash
-# Install from GitHub
-claude-code plugin install https://github.com/uukuguy/dev-phase-manager
+# Add GitHub repository as marketplace
+claude plugin marketplace add uukuguy/dev-phase-manager
+
+# Install the plugin
+claude plugin install dev-phase-manager
 ```
 
 ## Basic Usage
@@ -14,7 +17,7 @@ claude-code plugin install https://github.com/uukuguy/dev-phase-manager
 ### 1. Start Your First Phase
 
 ```bash
-/dev-phase-manager:start-phase "My First Feature"
+/start-phase "My First Feature"
 ```
 
 ### 2. Design and Plan
@@ -31,7 +34,7 @@ claude-code plugin install https://github.com/uukuguy/dev-phase-manager
 
 ```bash
 # Save state before clearing context
-/dev-phase-manager:checkpoint-plan
+/checkpoint-plan
 
 # Clear context
 /clear
@@ -41,7 +44,7 @@ claude-code plugin install https://github.com/uukuguy/dev-phase-manager
 
 ```bash
 # Resume from checkpoint
-/dev-phase-manager:resume-plan
+/resume-plan
 
 # Execute the plan
 /subagent-driven-development
@@ -51,7 +54,7 @@ claude-code plugin install https://github.com/uukuguy/dev-phase-manager
 
 ```bash
 # Finish the phase
-/dev-phase-manager:end-phase
+/end-phase
 ```
 
 ## Common Workflows
@@ -60,26 +63,26 @@ claude-code plugin install https://github.com/uukuguy/dev-phase-manager
 
 ```bash
 # Working on Feature A
-/dev-phase-manager:start-phase "Feature A"
+/start-phase "Feature A"
 # ... 60% complete ...
 
 # Urgent bug appears
-/dev-phase-manager:start-phase "Critical Bugfix"
+/start-phase "Critical Bugfix"
 # → Suspend Feature A? (y)
 # ... fix bug ...
-/dev-phase-manager:end-phase
+/end-phase
 
 # Resume Feature A
-/dev-phase-manager:start-phase --resume featurea
+/start-phase --resume featurea
 ```
 
 ### Managing Context
 
 ```bash
 # Context getting full
-/dev-phase-manager:checkpoint-progress
+/checkpoint-progress
 /clear
-/dev-phase-manager:resume-plan
+/resume-plan
 # Continue seamlessly
 ```
 
@@ -87,13 +90,13 @@ claude-code plugin install https://github.com/uukuguy/dev-phase-manager
 
 ```bash
 # View all phases and progress
-/dev-phase-manager:list-plan
+/list-plan
 ```
 
 ## Tips
 
-1. **Save Often**: Use `/dev-phase-manager:checkpoint-plan` before `/clear`
-2. **Check Status**: Use `/dev-phase-manager:list-plan` to see what's active
+1. **Save Often**: Use `/checkpoint-plan` before `/clear`
+2. **Check Status**: Use `/list-plan` to see what's active
 3. **Name Phases**: Use descriptive phase names
 4. **Resume Suspended**: Don't forget suspended phases
 

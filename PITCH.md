@@ -14,22 +14,22 @@ Never lose your Claude Code workflow progress again - save, clear, and resume se
 
 ```bash
 # Start a phase
-/dev-phase-manager:start-phase "Feature Implementation"
+/start-phase "Feature Implementation"
 
 # Design and plan
 /brainstorming
 /writing-plans
 
 # Context getting full? Save and clear!
-/dev-phase-manager:checkpoint-plan
+/checkpoint-plan
 /clear
 
 # Resume exactly where you left off
-/dev-phase-manager:resume-plan
+/resume-plan
 /subagent-driven-development
 
 # Complete the phase
-/dev-phase-manager:end-phase
+/end-phase
 ```
 
 ---
@@ -66,37 +66,37 @@ Never lose your Claude Code workflow progress again - save, clear, and resume se
 ### 1. Long-Running Projects
 ```bash
 # Day 1: Start feature
-/dev-phase-manager:start-phase "User Authentication"
+/start-phase "User Authentication"
 # ... work for hours ...
-/dev-phase-manager:checkpoint-plan
+/checkpoint-plan
 /clear
 
 # Day 2: Resume
-/dev-phase-manager:resume-plan
+/resume-plan
 # Continue seamlessly!
 ```
 
 ### 2. Urgent Interruptions
 ```bash
 # Working on Feature A (60% done)
-/dev-phase-manager:start-phase "Feature A"
+/start-phase "Feature A"
 
 # Urgent bug appears!
-/dev-phase-manager:start-phase "Critical Bugfix"
+/start-phase "Critical Bugfix"
 # → Suspend Feature A? (y)
 # ... fix bug ...
-/dev-phase-manager:end-phase
+/end-phase
 
 # Resume Feature A
-/dev-phase-manager:start-phase --resume featurea
+/start-phase --resume featurea
 ```
 
 ### 3. Context Management
 ```bash
 # Context getting full during implementation
-/dev-phase-manager:checkpoint-progress
+/checkpoint-progress
 /clear
-/dev-phase-manager:resume-plan
+/resume-plan
 # Continue without losing state!
 ```
 
@@ -107,7 +107,7 @@ Never lose your Claude Code workflow progress again - save, clear, and resume se
 ### Non-Invasive Design
 - Works alongside superpowers without modifications
 - File-based state transfer (clean separation)
-- Namespace isolation (`dev-phase-manager:` prefix)
+- Direct skill invocation (no namespace prefix needed)
 
 ### Smart Features
 - Auto-detect completed tasks from git history

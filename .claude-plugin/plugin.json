@@ -3,9 +3,25 @@
   "description": "Professional phase and checkpoint management system for Claude Code - enabling context-aware, multi-phase development workflows",
   "version": "1.0.0",
   "author": {
-    "name": "uukuguy"
+    "name": "Jiangwen Su",
+    "email": "uukuguy@gmail.com"
   },
   "license": "MIT",
   "repository": "https://github.com/uukuguy/dev-phase-manager",
-  "homepage": "https://github.com/uukuguy/dev-phase-manager#readme"
+  "homepage": "https://github.com/uukuguy/dev-phase-manager",
+  "keywords": [
+    "phase-management",
+    "checkpoint",
+    "workflow",
+    "session-management",
+    "productivity",
+    "development-phases",
+    "project-management",
+    "skills",
+    "tdd",
+    "debugging",
+    "collaboration",
+    "best-practices",
+    "workflows"
+  ]
 }

@@ -1,0 +1,20 @@
+{
+  "name": "dev-phase-manager-dev",
+  "description": "Development marketplace for dev-phase-manager core skills library",
+  "owner": {
+    "name": "Jiangwen Su",
+    "email": "uukuguy@gmail.com"
+  },
+  "plugins": [
+    {
+      "name": "dev-phase-manager",
+      "description": "Professional phase and checkpoint management system for Claude Code - enabling context-aware, multi-phase development workflows",
+      "version": "1.0.0",
+      "source": "./",
+      "author": {
+        "name": "Jiangwen Su",
+        "email": "uukuguy@gmail.com"
+      }
+    }
+  ]
+}

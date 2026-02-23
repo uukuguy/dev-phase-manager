@@ -92,7 +92,7 @@ This document describes the architecture and design principles of Phase Manager.
 ### Checkpoint Creation Flow
 
 ```
-User executes /dev-phase-manager:checkpoint-plan
+User executes /checkpoint-plan
   ↓
 Locate latest plan file
   ↓
@@ -110,7 +110,7 @@ Display confirmation
 ### Resume Flow
 
 ```
-User executes /dev-phase-manager:resume-plan
+User executes /resume-plan
   ↓
 Load .checkpoint.json
   ↓
@@ -130,7 +130,7 @@ Suggest next command
 ### Phase Stack Flow
 
 ```
-User executes /dev-phase-manager:start-phase "Phase X"
+User executes /start-phase "Phase X"
   ↓
 Load .phase_stack.json
   ↓

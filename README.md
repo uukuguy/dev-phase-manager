@@ -30,39 +30,29 @@ Dev Phase Manager is a non-invasive workflow enhancement plugin for Claude Code 
 - **Graceful Degradation**: Works even when files are missing
 - **Smart Prompts**: Intelligent confirmations and suggestions
 
-### 🔒 Namespace Isolation
-- **No Conflicts**: All commands use `dev-phase-manager:` prefix
-- **Coexist with User Skills**: Won't conflict with your existing `start-phase`, `end-phase` skills
-- **Clean Separation**: Similar to superpowers plugin's namespace approach
-
 ## 📦 Installation
 
-### Method 1: Direct Installation (Recommended)
+### Method 1: From GitHub (Recommended)
 
 ```bash
-# Install from GitHub
-claude-code plugin install https://github.com/uukuguy/dev-phase-manager
+# Add GitHub repository as marketplace
+claude plugin marketplace add uukuguy/dev-phase-manager
+
+# Install the plugin
+claude plugin install dev-phase-manager
 ```
 
-### Method 2: Manual Installation
+### Method 2: Local Development
 
 ```bash
 # Clone the repository
 git clone https://github.com/uukuguy/dev-phase-manager.git
 
-# Copy to Claude Code plugins directory
-cp -r dev-phase-manager ~/.claude/plugins/
-```
+# Add local directory as marketplace
+claude plugin marketplace add /path/to/dev-phase-manager
 
-### Method 3: Development Installation
-
-```bash
-# Clone for development
-git clone https://github.com/uukuguy/dev-phase-manager.git
-cd dev-phase-manager
-
-# Link to plugins directory
-ln -s $(pwd) ~/.claude/plugins/dev-phase-manager
+# Install the plugin
+claude plugin install dev-phase-manager
 ```
 
 ## 🚀 Quick Start
@@ -71,18 +61,18 @@ ln -s $(pwd) ~/.claude/plugins/dev-phase-manager
 
 ```bash
 # 1. Start a new phase
-/dev-phase-manager:start-phase "Phase 1 - Feature Implementation"
+/start-phase "Phase 1 - Feature Implementation"
 
 # 2. Design and plan
 /brainstorming
 /writing-plans
 
 # 3. Save checkpoint before clearing context
-/dev-phase-manager:checkpoint-plan
+/checkpoint-plan
 /clear
 
 # 4. Resume execution
-/dev-phase-manager:resume-plan
+/resume-plan
 /subagent-driven-development
 
 # 5. Complete phase
@@ -112,7 +102,7 @@ ln -s $(pwd) ~/.claude/plugins/dev-phase-manager
 
 ### Core Commands
 
-#### `/dev-phase-manager:checkpoint-plan`
+#### `/checkpoint-plan`
 Save current plan execution state to filesystem.
 
 **Usage:**
@@ -142,7 +132,7 @@ Next steps:
 
 ---
 
-#### `/dev-phase-manager:resume-plan`
+#### `/resume-plan`
 Resume plan execution from saved checkpoint.
 
 **Usage:**
@@ -175,7 +165,7 @@ Please execute: /subagent-driven-development
 
 ---
 
-#### `/dev-phase-manager:checkpoint-progress`
+#### `/checkpoint-progress`
 Update execution progress during implementation.
 
 **Usage:**
@@ -208,7 +198,7 @@ Next steps:
 
 ---
 
-#### `/dev-phase-manager:start-phase`
+#### `/start-phase`
 Start a new phase or resume a suspended phase.
 
 **Usage:**
@@ -251,7 +241,7 @@ Next steps:
 
 ---
 
-#### `/dev-phase-manager:end-phase`
+#### `/end-phase`
 Complete current phase with proper cleanup.
 
 **Usage:**
@@ -291,7 +281,7 @@ Resume phase4 now? (y/n)
 
 ---
 
-#### `/dev-phase-manager:list-plan`
+#### `/list-plan`
 Display comprehensive project status.
 
 **Usage:**
@@ -565,11 +555,7 @@ Dev Phase Manager is designed to **enhance** superpowers workflows by adding sta
 ### Do I need superpowers to use this plugin?
 
 **No, but recommended.** Dev Phase Manager works standalone, but it's designed to integrate seamlessly with superpowers workflows like:
-- `/brainstorming` → `/writing-plans` → `/dev-phase-manager:checkpoint-plan` → `/clear` → `/dev-phase-manager:resume-plan` → `/subagent-driven-development`
-
-### Why use the `dev-phase-manager:` prefix?
-
-The namespace prefix follows Claude Code plugin conventions (similar to `superpowers:` prefix) to ensure clean separation and avoid naming conflicts with other plugins or user-defined skills.
+- `/brainstorming` → `/writing-plans` → `/checkpoint-plan` → `/clear` → `/resume-plan` → `/subagent-driven-development`
 
 ## 📄 License
 

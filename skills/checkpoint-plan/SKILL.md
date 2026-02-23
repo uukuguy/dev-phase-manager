@@ -84,7 +84,7 @@ Status: Design completed, ready for execution
 
 Next steps:
 1. /clear - Clear context
-2. /dev-phase-manager:resume-plan - Resume execution
+2. /resume-plan - Resume execution
 ```
 
 ## Use Cases
@@ -94,30 +94,30 @@ Next steps:
 ```bash
 /brainstorming
 /writing-plans
-/dev-phase-manager:checkpoint-plan    # Save design phase state
+/checkpoint-plan    # Save design phase state
 /clear
-/dev-phase-manager:resume-plan        # Start execution
+/resume-plan        # Start execution
 ```
 
 ### Case 2: During Execution
 
 ```bash
-/dev-phase-manager:resume-plan
+/resume-plan
 /subagent-driven-development
 # ... executed 3 tasks ...
-/dev-phase-manager:checkpoint-plan    # Save execution progress
+/checkpoint-plan    # Save execution progress
 /clear
-/dev-phase-manager:resume-plan        # Continue execution
+/resume-plan        # Continue execution
 ```
 
 ### Case 3: Switching Work
 
 ```bash
 # Working on Phase 5
-/dev-phase-manager:checkpoint-plan    # Save current progress
+/checkpoint-plan    # Save current progress
 # Switch to other work
 # Later return
-/dev-phase-manager:resume-plan        # Resume Phase 5
+/resume-plan        # Resume Phase 5
 ```
 
 ## Integration with Third-Party Skills
