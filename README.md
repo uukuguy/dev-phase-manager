@@ -4,7 +4,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-Plugin-blue.svg)](https://github.com/anthropics/claude-code)
-[![Version](https://img.shields.io/badge/version-1.0.0-green.svg)](https://github.com/uukuguy/dev-phase-manager/releases)
+[![Version](https://img.shields.io/badge/version-1.1.0-green.svg)](https://github.com/uukuguy/dev-phase-manager/releases)
 
 Dev Phase Manager is a non-invasive workflow enhancement plugin for Claude Code that enables context-aware, multi-phase development workflows with intelligent checkpoint management.
 
@@ -97,6 +97,43 @@ claude plugin install dev-phase-manager
 # ... complete Phase 1 ...
 /end-phase
 ```
+
+## 🏛️ Architecture: Commands + Skills
+
+Dev Phase Manager follows the **dual-layer architecture** pattern (same as superpowers):
+
+```
+dev-phase-manager/
+├── commands/                    ← User entry points (thin wrappers)
+│   ├── start-phase.md           ← One-line: invoke skill
+│   ├── end-phase.md
+│   ├── list-plan.md
+│   ├── checkpoint-plan.md
+│   ├── checkpoint-progress.md
+│   ├── resume-plan.md
+│   ├── mem-save.md              ← NEW in v1.1.0
+│   └── mem-search.md            ← NEW in v1.1.0
+└── skills/                      ← Full skill logic
+    ├── start-phase/SKILL.md
+    ├── end-phase/SKILL.md
+    ├── list-plan/SKILL.md
+    ├── checkpoint-plan/SKILL.md
+    ├── checkpoint-progress/SKILL.md
+    ├── resume-plan/SKILL.md
+    ├── mem-save/SKILL.md         ← NEW in v1.1.0
+    └── mem-search/SKILL.md       ← NEW in v1.1.0
+```
+
+**commands/*.md** are thin wrappers that invoke the corresponding skill:
+```yaml
+---
+description: "Start new phase or resume suspended phase"
+disable-model-invocation: true
+---
+Invoke the dev-phase-manager:start-phase skill and follow it exactly as presented to you
+```
+
+**skills/*/SKILL.md** contain the complete behavior definition with all execution steps.
 
 ## 📚 Commands Reference
 
@@ -332,6 +369,74 @@ Display comprehensive project status.
   - Phase stack: docs/dev/.phase_stack.json
 ```
 
+---
+
+#### `/mem-save`
+Save current work memory to multiple backends with local index tracking.
+
+**Usage:**
+```bash
+/mem-save
+```
+
+**What it does:**
+- Summarizes current progress (2-3 sentences)
+- Saves to claude-mem and knowledge graph
+- Appends entry to `docs/dev/MEMORY_INDEX.md`
+- Does NOT create git commits
+
+**Output:**
+```
+Memory saved
+
+Saved to:
+- claude-mem: "[Project] Memory Save - [Achievement]"
+- knowledge graph: Updated observations
+- MEMORY_INDEX.md: Added entry to [Active Work]
+
+Summary:
+- Completed: Feature X implementation
+- In progress: Integration testing
+- Next steps: Run full test suite
+```
+
+---
+
+#### `/mem-search`
+Search and browse work memories with local index priority.
+
+**Usage:**
+```bash
+# Browse recent memories
+/mem-search
+
+# Search specific topic
+/mem-search architecture
+```
+
+**What it does:**
+- Reads `docs/dev/MEMORY_INDEX.md` first (local, fast, browsable)
+- Searches claude-mem and knowledge graph as supplement
+- Merges and displays results with local index first
+
+**Output:**
+```
+Memory Search Results
+
+Local Index (MEMORY_INDEX.md):
+  [Active Work]
+  - 15:30 | Completed MCP server integration
+  - 14:00 | Architecture decision: FastMCP
+
+  claude-mem:
+  - [2026-02-22] Phase 4 completed
+
+  Knowledge Graph:
+  - Ouroboros: bilingual architecture (Python + TypeScript)
+```
+
+---
+
 ## 🏗️ Architecture
 
 ### File Structure
@@ -340,6 +445,7 @@ Display comprehensive project status.
 docs/
 ├── dev/
 │   ├── .phase_stack.json              # Phase stack (active/suspended)
+│   ├── MEMORY_INDEX.md                # Local memory index (NEW in v1.1.0)
 │   ├── NEXT_SESSION_GUIDE.md          # Active phase guide
 │   ├── NEXT_SESSION_GUIDE-phase4.md   # Suspended phase guide
 │   └── WORK_LOG.md                    # Work log
@@ -575,8 +681,8 @@ MIT License - see [LICENSE](LICENSE) file for details.
 
 ## 🗺️ Roadmap
 
-- [ ] v1.1: Progress visualization with progress bars
-- [ ] v1.2: Colored terminal output
+- [x] v1.1: Memory enhancement + commands/ restoration
+- [ ] v1.2: Progress visualization with progress bars
 - [ ] v1.3: Phase dependency management
 - [ ] v1.4: Timeline view for phase history
 - [ ] v2.0: Web UI for phase management

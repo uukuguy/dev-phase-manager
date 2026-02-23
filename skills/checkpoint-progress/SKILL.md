@@ -109,8 +109,9 @@ Updated: 2026-02-22 18:15
 
 Suggested next steps:
 1. Continue current task
-2. /clear - Clean context (if needed)
-3. /resume-plan - Resume execution (after clear)
+2. /mem-save - Save work memory to index (recommended)
+3. /clear - Clean context (if needed)
+4. /resume-plan - Resume execution (after clear)
 ```
 
 ## Usage Examples

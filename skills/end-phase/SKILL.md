@@ -90,6 +90,62 @@ mcp__memory__create_entities \
   }]'
 ```
 
+### 2.5 Archive Phase Memory
+
+Archive `[Active Work]` entries from MEMORY_INDEX.md into a completed phase section:
+
+```bash
+if [ -f docs/dev/MEMORY_INDEX.md ]; then
+  # 1. Read current [Active Work] entries
+  active_entries=$(# extract entries from [Active Work] section)
+
+  # 2. Create archived phase section
+  # Format: ## Phase N - Name [COMPLETED YYYY-MM-DD]
+  archive_header="## ${phase_name} [COMPLETED $(date +%Y-%m-%d)]"
+
+  # 3. Move [Active Work] entries into the archive section
+  # Insert the archive section BEFORE [Active Work]
+
+  # 4. Scan entries for architecture decisions
+  # Look for keywords: "architecture decision", "decided to use", "adopted"
+  # Extract these to knowledge graph:
+  # mcp__memory__add_observations --entityName "ProjectName" --contents "..."
+
+  # 5. Clear [Active Work] and add phase completion entry
+  # New [Active Work] content:
+  # - HH:MM | ${phase_name} completed
+fi
+```
+
+Example MEMORY_INDEX.md after archiving:
+
+```markdown
+# Memory Index
+
+Project: Ouroboros
+Created: 2026-02-22
+
+---
+
+## Phase 4 - MCP Tool Server [COMPLETED 2026-02-22]
+
+- 18:30 | Phase 4 complete: MCP server 30 tests all pass
+- 16:45 | Architecture decision: spawn_blocking wraps Wasm sync execution
+- 14:00 | Started Phase 4
+
+---
+
+## [Active Work]
+
+- 19:00 | Phase 4 - MCP Tool Server completed
+```
+
+**Rules**:
+- Only move entries from `[Active Work]`, never modify existing archived sections
+- Preserve entry order (newest first) within the archived section
+- Add a `---` separator between archived sections
+- If MEMORY_INDEX.md doesn't exist, skip this step (nothing to archive)
+
 ### 3. Update Documentation
 
 #### 3.1 Update WORK_LOG.md

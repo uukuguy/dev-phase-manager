@@ -1,7 +1,7 @@
 {
   "name": "dev-phase-manager",
   "description": "Professional phase and checkpoint management system for Claude Code - enabling context-aware, multi-phase development workflows",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "author": {
     "name": "Jiangwen Su",
     "email": "uukuguy@gmail.com"

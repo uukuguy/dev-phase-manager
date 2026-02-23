@@ -46,6 +46,32 @@ This document describes the architecture and design principles of Phase Manager.
 - Safe to retry operations
 - Robust error handling
 
+## Commands / Skills Dual-Layer Architecture
+
+Following the superpowers pattern, dev-phase-manager uses a two-layer structure:
+
+```
+dev-phase-manager/
+├── commands/                     ← User entry points (thin wrappers)
+│   └── <command>.md              ← YAML frontmatter + one-line skill invocation
+└── skills/                       ← Full skill logic
+    └── <skill>/SKILL.md          ← Complete behavior definition
+```
+
+**commands/*.md** format:
+```yaml
+---
+description: "Brief description"
+disable-model-invocation: true
+---
+Invoke the dev-phase-manager:<skill-name> skill and follow it exactly as presented to you
+```
+
+**Rationale**:
+- commands/ provides a clean user-facing entry point
+- skills/ contains the full behavior definition that can be tested independently
+- This separation allows commands to be discovered/listed while skills hold the logic
+
 ## Component Architecture
 
 ```
@@ -54,12 +80,16 @@ This document describes the architecture and design principles of Phase Manager.
 └─────────────────────────────────────────────────────────┘
                           ↓
 ┌─────────────────────────────────────────────────────────┐
-│  Phase Manager Commands                                  │
-│  ┌─────────────┐  ┌──────────────┐  ┌────────────────┐ │
-│  │ checkpoint- │  │ start-phase  │  │ list-plan      │ │
-│  │ plan        │  │ end-phase    │  │                │ │
-│  │ resume-plan │  │              │  │                │ │
-│  └─────────────┘  └──────────────┘  └────────────────┘ │
+│  Commands Layer (commands/*.md - thin wrappers)          │
+│  ┌─────────────┐ ┌──────────┐ ┌─────────┐ ┌─────────┐ │
+│  │ checkpoint- │ │ start-   │ │ list-   │ │ mem-    │ │
+│  │ plan/prog.  │ │ end-     │ │ plan    │ │ save/   │ │
+│  │ resume-plan │ │ phase    │ │         │ │ search  │ │
+│  └─────────────┘ └──────────┘ └─────────┘ └─────────┘ │
+└─────────────────────────────────────────────────────────┘
+                          ↓
+┌─────────────────────────────────────────────────────────┐
+│  Skills Layer (skills/*/SKILL.md - full logic)           │
 └─────────────────────────────────────────────────────────┘
                           ↓
 ┌─────────────────────────────────────────────────────────┐
@@ -71,10 +101,19 @@ This document describes the architecture and design principles of Phase Manager.
 └─────────────────────────────────────────────────────────┘
                           ↓
 ┌─────────────────────────────────────────────────────────┐
+│  Memory Management Layer (NEW in v1.1.0)                 │
+│  ┌──────────────────┐  ┌──────────────────────────────┐ │
+│  │ MEMORY_INDEX.md  │  │ MCP Memory Backends          │ │
+│  │ (local, primary) │  │ (claude-mem, knowledge graph)│ │
+│  └──────────────────┘  └──────────────────────────────┘ │
+└─────────────────────────────────────────────────────────┘
+                          ↓
+┌─────────────────────────────────────────────────────────┐
 │  Filesystem Storage                                      │
 │  ┌──────────────────┐  ┌──────────────────────────────┐ │
 │  │ .checkpoint.json │  │ .phase_stack.json            │ │
 │  │ Plan files       │  │ Session guides               │ │
+│  │ MEMORY_INDEX.md  │  │                              │ │
 │  └──────────────────┘  └──────────────────────────────┘ │
 └─────────────────────────────────────────────────────────┘
                           ↓
@@ -86,6 +125,47 @@ This document describes the architecture and design principles of Phase Manager.
 │  └──────────────────┘  └──────────────────────────────┘ │
 └─────────────────────────────────────────────────────────┘
 ```
+
+## Memory Management Layer (v1.1.0)
+
+### MEMORY_INDEX.md
+
+A local, browsable memory index file stored at `docs/dev/MEMORY_INDEX.md` in the consuming project.
+
+**Format**:
+```markdown
+# Memory Index
+
+Project: ProjectName
+Created: YYYY-MM-DD
+
+---
+
+## Phase N - Name [COMPLETED YYYY-MM-DD]
+
+- HH:MM | Entry description
+- HH:MM | Entry description
+
+---
+
+## [Active Work]
+
+- HH:MM | Latest entry (newest first)
+- HH:MM | Earlier entry
+```
+
+**Design decisions**:
+- **Local-first**: MEMORY_INDEX.md is the primary memory source; MCP backends are optional supplements
+- **Browsable**: Unlike semantic-search-only claude-mem, the index can be read top-to-bottom
+- **Phase-organized**: Entries are archived by phase for historical context
+- **Append-only**: New entries always go to `[Active Work]` top; archiving moves entire sections
+
+**Lifecycle**:
+1. `/mem-save` appends entries to `[Active Work]`
+2. `/mem-search` reads and filters entries
+3. `/end-phase` archives `[Active Work]` into a completed phase section
+4. `/start-phase` reads `[Active Work]` for quick context recovery
+5. `/list-plan` reads recent entries for real-time status display
 
 ## Data Flow
 

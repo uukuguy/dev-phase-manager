@@ -42,19 +42,52 @@ else
 fi
 ```
 
-### 3. Search Memory
+### 2.5 Collect Real-time Status
 
-Use MCP tools to search recent progress records:
+Gather live state information to complement the static checkpoint:
 
 ```bash
-# Search claude-mem
-mcp__plugin_claude-mem_mcp-search__search \
-  --query "Ouroboros phase" \
-  --limit 5
+# A. Recent git activity
+git log --oneline -10
+# → What was done recently
 
-# Search memory knowledge graph
-mcp__memory__search_nodes \
-  --query "Ouroboros"
+# B. Current uncommitted changes
+git diff --stat
+# → What's being worked on right now
+
+# C. Read MEMORY_INDEX.md recent entries
+if [ -f docs/dev/MEMORY_INDEX.md ]; then
+  # Read [Active Work] section, show latest 5 entries
+  # These provide timestamped progress context
+fi
+```
+
+**Consistency check**: If checkpoint `updated_at` is significantly older than the latest git commit, display:
+
+```
+⚠️ Checkpoint may be stale
+  Checkpoint updated: 2026-02-22 15:00
+  Latest git commit:  2026-02-22 18:30
+  Consider running /checkpoint-progress to sync
+```
+
+### 3. Search Memory (Optional Enhancement)
+
+If `docs/dev/MEMORY_INDEX.md` exists, use it as the primary memory source instead of MCP search:
+
+```bash
+if [ -f docs/dev/MEMORY_INDEX.md ]; then
+  # Read [Active Work] and latest completed phase
+  # This is faster and more reliable than MCP search
+else
+  # Fall back to MCP tools
+  mcp__plugin_claude-mem_mcp-search__search \
+    --query "Ouroboros phase" \
+    --limit 5
+
+  mcp__memory__search_nodes \
+    --query "Ouroboros"
+fi
 ```
 
 ### 4. Display Comprehensive Information
@@ -80,12 +113,19 @@ Integrate all information and display complete project status:
   Progress: 6/10 tasks completed (60%)
   Checkpoint: docs/plans/.checkpoint-phase4.json
 
-📝 Recent Memory:
-  1. [2026-02-22 15:00] Phase 5 started - MCP Server
-  2. [2026-02-22 14:30] Phase 4 suspended - Waiting for MCP implementation
-  3. [2026-02-22 12:00] Phase 4 progress - Completed FSM design
-  4. [2026-02-22 10:00] Phase 4 started - Cognitive Layer
-  5. [2026-02-21 18:00] Phase 3 completed - Cognitive Layer foundation
+🔨 Real-time Status:
+  Recent commits:
+    abc1234 feat: implement Task 3 - handlers
+    def5678 feat: implement Task 2 - interfaces
+    ghi9012 feat: implement Task 1 - structure
+  Uncommitted changes:
+    M src/server.ts
+    M tests/server.test.ts
+
+📝 Recent Memory (from MEMORY_INDEX.md):
+  - 18:30 | Phase 4 complete: MCP server 30 tests all pass
+  - 16:45 | Architecture decision: spawn_blocking wraps Wasm sync
+  - 14:00 | Started Phase 4
 
 💡 Suggested Actions:
   1. Continue Phase 5: Execute Task 4

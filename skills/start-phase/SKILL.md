@@ -16,6 +16,41 @@ Start new phase work, supporting phase stack management and pause/resume.
 
 ## Execution Steps
 
+### 0. Auto Resume Detection
+
+Before anything else, check if there's an orphaned checkpoint that suggests interrupted work:
+
+```bash
+if [ -f docs/plans/.checkpoint.json ]; then
+  # Check if phase stack has no active phases
+  if [ ! -f docs/dev/.phase_stack.json ] || \
+     [ "$(jq '.active_phases | length' docs/dev/.phase_stack.json 2>/dev/null)" = "0" ]; then
+
+    # Orphaned checkpoint detected
+    plan_file=$(jq -r '.plan_file' docs/plans/.checkpoint.json)
+    phase_name=$(jq -r '.phase_name' docs/plans/.checkpoint.json)
+    updated_at=$(jq -r '.updated_at' docs/plans/.checkpoint.json)
+    completed=$(jq -r '.completed_tasks | length' docs/plans/.checkpoint.json)
+
+    echo "⚠️ Orphaned checkpoint detected"
+    echo ""
+    echo "  Phase: ${phase_name}"
+    echo "  Plan: ${plan_file}"
+    echo "  Last updated: ${updated_at}"
+    echo "  Completed tasks: ${completed}"
+    echo ""
+    echo "Options:"
+    echo "1. Restore from checkpoint (recommended)"
+    echo "2. Ignore and start fresh"
+    echo ""
+    echo "Select (1/2):"
+
+    # If user selects 1: execute /resume-plan flow
+    # If user selects 2: continue to step 1
+  fi
+fi
+```
+
 ### 1. Read Phase Stack
 
 Read `docs/dev/.phase_stack.json` (if exists):
@@ -142,19 +177,41 @@ Display key information:
 - Next step priorities
 - Key code paths
 
-### 5. Load Memory
+### 4.5 Read Memory Index
 
-Use MCP tools to load project memory:
+Read `docs/dev/MEMORY_INDEX.md` to show recent work context:
 
 ```bash
-# 1. Search recent work memory
-mcp__plugin_claude-mem_mcp-search__search \
-  --query "Ouroboros phase" \
-  --limit 5
+if [ -f docs/dev/MEMORY_INDEX.md ]; then
+  echo "📋 Recent Memory (from MEMORY_INDEX.md):"
+  # Read [Active Work] section, display latest entries
+  # This provides quick context about recent progress
+fi
+```
 
-# 2. Search architecture decisions and technical conventions
-mcp__memory__search_nodes \
-  --query "Ouroboros architecture"
+Display recent entries:
+
+```
+📋 Recent Memory:
+  - 15:30 | Completed MCP server integration tests
+  - 14:00 | Architecture decision: use FastMCP framework
+  - 11:20 | Fixed PydanticAI mock issue
+```
+
+### 5. Load Memory (Optional Enhancement)
+
+If MEMORY_INDEX.md provided sufficient context, MCP search is optional. Otherwise, use MCP tools:
+
+```bash
+if [ ! -f docs/dev/MEMORY_INDEX.md ]; then
+  # Fall back to MCP search
+  mcp__plugin_claude-mem_mcp-search__search \
+    --query "Ouroboros phase" \
+    --limit 5
+
+  mcp__memory__search_nodes \
+    --query "Ouroboros architecture"
+fi
 ```
 
 Briefly report loaded key context (2-3 sentences):
